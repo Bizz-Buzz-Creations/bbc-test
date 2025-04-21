@@ -4,8 +4,6 @@ import ListeningSection1 from './components/ListeningSection1';
 import ListeningSection2 from './components/ListeningSection2';
 import ListeningSection3 from './components/ListeningSection3';
 import ListeningSection4 from './components/ListeningSection4';
-import FillInBlanks from './components/FillInBlanks';
-import MCQ from './components/MCQ';
 import Result from './components/Result';
 import SpeakingTest from './components/SpeakingTest';
 import Navbar from './components/Navbar';
@@ -23,8 +21,6 @@ function App() {
           <Route path="/listening-section-3" element={<ListeningSection3 />} />
           <Route path="/listening-section-4" element={<ListeningSection4 />} />
           <Route path="/speaking-test" element={<SpeakingTest />} />
-          {/* <Route path="/fill-blanks" element={<FillInBlanks />} />
-          <Route path="/mcq" element={<MCQ />} /> */}
           <Route path="/result" element={<Result />} />
         </Routes>
         <Footer />
