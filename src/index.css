@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .stacked-paper {
+    box-shadow:
+      1px 1px 0 0 silver,
+      2px 2px 0 0 rgb(60, 60, 60),
+      3px 3px 0 0 silver,
+      4px 4px 0 0 rgb(60, 60, 60),
+      5px 5px 0 0 silver,
+      6px 6px 0 0 rgb(60, 60, 60);
+  }
+}
