@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
+// import { preload } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import audioFile from '../assets/audio/listening-11/11.1.mp3';
 import Cookies from 'js-cookie';
+// import { loaderSvg } from '../assets/images/preload.svg'; 
 
 const ListeningSection1 = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -10,6 +12,7 @@ const ListeningSection1 = () => {
   const audioRef = useRef(null);
   const timerRef = useRef(null);
   const [countdown, setCountdown] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const correctAnswers = {
     q1: 'Grieg',
@@ -45,7 +48,7 @@ const ListeningSection1 = () => {
     const secs = (seconds % 60).toString().padStart(2, '0');
     return `${mins}:${secs}`;
   };
-  
+
 
   const handleSubmit = () => {
     let sectionScore = 0;
@@ -60,13 +63,9 @@ const ListeningSection1 = () => {
     }
     setScore(sectionScore);
     Cookies.set('listeningSection1Score', sectionScore, { expires: 1 });
-    navigate('/listening-section-2');
-  }
-
-  const handleAudioEnd = () => {
     setIsPlaying(false);
     navigate('/listening-section-2');
-  };
+  }
 
   const handleAudioPlay = () => {
     setIsPlaying(true);
@@ -75,33 +74,51 @@ const ListeningSection1 = () => {
     startCountdown();
     const showCountdown = document.querySelector('#countdown');
     showCountdown.style.display = 'block';
+    showCountdown.style.fontFamily = 'monospace';
+    showCountdown.style.fontSize = '1.5rem';
+    showCountdown.style.color = '#6a5acd'
+  }
+
+  const handleCanPlay = () => {
+    setIsLoading(false);
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-purple-50">
       <div className="bg-white p-8 mt-10 rounded-lg shadow-md w-96">
         <div className="flex flex-col items-center">
+          {isLoading && (
+            <div className="flex items-center justify-center h-16">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+              <span className="ml-2 text-blue-500">Loading audio...</span>
+            </div>
+          )}
           <audio
             ref={audioRef}
             src={audioFile} // Replace with your actual audio file path
             controls
+            controlsList="nodownload"
+            onCanPlay={handleCanPlay}
             onPlay={handleAudioPlay}
             onPause={() => setIsPlaying(false)}
-            onEnded={handleAudioEnd}
-            className="mb-4"
-          />
+            onEnded={handleSubmit}
+            className={`mb-4 ${isLoading ? "hidden" : "block"}`}>
+              Your browser does not support the audio element.
+            </audio>
           <strong id='countdown' className='hidden'>{formatTime(countdown)}</strong>
-          <p className="text-gray-600 text-center ">
+          <p className="text-slate-600 font-mono text-xs text-center ">
             Please listen to the audio carefully. You will not be able to replay it.
           </p>
         </div>
       </div>
       <div className="text-left">
         <div className="flex justify-center items-start min-h-screen p-12">
-          <div className="stacked-paper w-full h-fit p-5 mx-auto bg-gray-100 bg-white border-t-1 border-l-1 border-gray-400">
+          <div className="stacked-paper w-full h-fit mx-auto bg-gray-100 bg-white border border-gray-400 rounded-lg shadow-md">
+            <div className='bg-red-50 rounded-t-lg p-5 border-b border-gray-300'>
             <h1 className="text-2xl text-slate-900 font-semibold">Section 1</h1>
             <p className='text-slate-800'><span className="font-medium">QUESTIONS 1-10:</span> Write <span className="font-medium">NO MORE THAN TWO WORDS AND/OR A NUMBER</span> for each answer.</p>
-            <div className="flex items-center bg-white">
+            </div>
+            <div className="flex items-center bg-white px-5">
               <div className='flex flex-col'>
                 <h2 className="text-xl font-semibold text-gray-700 my-4">Registration Form -</h2>
 
@@ -179,10 +196,10 @@ const ListeningSection1 = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-6 text-center">
+            <div className="mt-6 text-center mb-5">
               <button
                 onClick={handleSubmit}
-                className="bg-blue-500 text-white font-semibold px-6 py-2 rounded hover:bg-blue-600"
+                className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium font-mono rounded-lg border border-gray-200 bg-slate-900 text-gray-100 shadow-2xs hover:bg-slate-800 focus:outline-hidden focus:bg-slate-500 disabled:opacity-5"
               >
                 Submit Test
               </button>

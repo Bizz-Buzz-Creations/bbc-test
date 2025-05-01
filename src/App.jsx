@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
+      <div className="flex flex-col min-h-screen bg-gray-100">
         <Navbar />
         <Routes>
           <Route path="/" element={<UserInfo />} />

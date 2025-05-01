@@ -10,6 +10,7 @@ const ListeningSection2 = () => {
   const audioRef = useRef(null);
   const timerRef = useRef(null);
   const [countdown, setCountdown] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const correctAnswers = {
     q1: 'C',
@@ -69,10 +70,6 @@ const ListeningSection2 = () => {
 
     setScore(sectionScore);
     Cookies.set('listeningSection2Score', sectionScore, { expires: 1 });
-    navigate('/listening-section-3');
-  };
-
-  const handleAudioEnd = () => {
     setIsPlaying(false);
     navigate('/listening-section-3');
   };
@@ -84,23 +81,39 @@ const ListeningSection2 = () => {
     startCountdown();
     const showCountdown = document.querySelector('#countdown');
     showCountdown.style.display = 'block';
+    showCountdown.style.fontFamily = 'monospace';
+    showCountdown.style.fontSize = '1.5rem';
+    showCountdown.style.color = '#6a5acd'
+  }
+
+  const handleCanPlay = () => {
+    setIsLoading(false);
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-purple-50">
       <div className="bg-white p-8 mt-10 rounded-lg shadow-md w-96">
         <div className="flex flex-col items-center">
+          {isLoading && (
+            <div className="flex items-center justify-center h-16">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+              <span className="ml-2 text-blue-500">Loading audio...</span>
+            </div>
+          )}
           <audio
             ref={audioRef}
             src={audioFile}
             controls
+            controlsList="nodownload"
+            onCanPlay={handleCanPlay}
             onPlay={handleAudioPlay}
             onPause={() => setIsPlaying(false)}
-            onEnded={handleAudioEnd}
-            className="mb-4"
-          />
+            onEnded={handleSubmit}
+            className={`mb-4 ${isLoading ? "hidden" : "block"}`}>
+            Your browser does not support the audio element.
+          </audio>
           <strong id='countdown' className='hidden'>{formatTime(countdown)}</strong>
-          <p className="text-gray-600 text-center">
+          <p className="text-slate-600 font-mono text-xs text-center">
             Please listen to the audio carefully. You will not be able to replay it.
           </p>
         </div>
