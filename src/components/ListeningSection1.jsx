@@ -52,10 +52,13 @@ const ListeningSection1 = () => {
 
   const handleSubmit = () => {
     let sectionScore = 0;
+    const userAnswers = {};
 
     for (let i = 1; i <= 10; i++) {
       const inputVal = document.getElementById(`q${i}`).value.trim().toLowerCase();
       const correctAnswer = correctAnswers[`q${i}`];
+
+      userAnswers[`${i}`] = inputVal; // store original (not lowercased) input
 
       if (correctAnswer && inputVal === correctAnswer.toLowerCase()) {
         sectionScore++;
@@ -63,6 +66,8 @@ const ListeningSection1 = () => {
     }
     setScore(sectionScore);
     Cookies.set('listeningSection1Score', sectionScore, { expires: 1 });
+    Cookies.set('listeningSection1Answers', JSON.stringify(userAnswers), { expires: 1 });
+
     setIsPlaying(false);
     navigate('/listening-section-2');
   }
@@ -115,12 +120,12 @@ const ListeningSection1 = () => {
         <div className="flex justify-center items-start min-h-screen p-12">
           <div className="stacked-paper w-full h-fit mx-auto bg-gray-100 bg-white border border-gray-400 rounded-lg shadow-md">
             <div className='bg-red-50 rounded-t-lg p-5 border-b border-gray-300'>
-            <h1 className="text-2xl text-slate-900 font-semibold">Section 1</h1>
-            <p className='text-slate-800'><span className="font-medium">QUESTIONS 1-10:</span> Write <span className="font-medium">NO MORE THAN TWO WORDS AND/OR A NUMBER</span> for each answer.</p>
+            <h1 className="text-2xl text-slate-900 font-semibold font-mono">Section 1</h1>
+            <p className='text-slate-800 inter-400 text-sm'><span className="font-medium">QUESTIONS 1-10:</span> Write <span className="font-medium">NO MORE THAN TWO WORDS AND/OR A NUMBER</span> for each answer.</p>
             </div>
             <div className="flex items-center bg-white px-5">
-              <div className='flex flex-col'>
-                <h2 className="text-xl font-semibold text-gray-700 my-4">Registration Form -</h2>
+              <div className='flex flex-col inter-400'>
+                <h2 className="text-lg inter-600 font-semibold text-gray-700 my-4">Registration Form -</h2>
 
                 {/* <!-- 1 --> */}
                 <div className="flex items-center gap-2">
@@ -183,7 +188,7 @@ const ListeningSection1 = () => {
                 </div>
 
                 {/* <!-- Lost Property Section --> */}
-                <h3 className="text-lg font-semibold text-gray-700 my-4">Details of Lost Property</h3>
+                <h3 className="text-lg inter-600 font-semibold text-gray-700 my-4">Details of Lost Property -</h3>
 
                 <div className="flex items-center">
                   <label className="block text-gray-700 mb-1">Serial number of lost computer: <span className='font-semibold'>(9)</span></label>
@@ -203,9 +208,9 @@ const ListeningSection1 = () => {
               >
                 Submit Test
               </button>
-              {score !== null && (
+              {/* {score !== null && (
                 <p className="mt-4 text-lg font-bold">Your score: {score}/10</p>
-              )}
+              )} */}
             </div>
           </div>
         </div>
