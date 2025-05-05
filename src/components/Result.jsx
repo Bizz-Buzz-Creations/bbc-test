@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 const Result = () => {
   const [totalScore, setTotalScore] = useState(0);
   const [sectionScores, setSectionScores] = useState({});
+  const [sectionAnswers, setSectionAnswers] = useState({});
   const [totalQuestions, setTotalQuestions] = useState(0);
 
   const navigate = useNavigate();
@@ -17,18 +18,22 @@ const Result = () => {
       section2: parseInt(Cookies.get('listeningSection2Score') || 0),
       section3: parseInt(Cookies.get('listeningSection3Score') || 0),
       section4: parseInt(Cookies.get('listeningSection4Score') || 0),
+    };
+
+    const savedAnswers = {
       savedAnswers1: JSON.parse(Cookies.get('listeningSection1Answers') || '{}'),
       savedAnswers2: JSON.parse(Cookies.get('listeningSection2Answers') || '{}'),
       savedAnswers3: JSON.parse(Cookies.get('listeningSection3Answers') || '{}'),
       savedAnswers4: JSON.parse(Cookies.get('listeningSection4Answers') || '{}'),
-    };
+    }
 
     setSectionScores(scores);
+    setSectionAnswers(savedAnswers);
     setTotalScore(scores.section1 + scores.section2 + scores.section3 + scores.section4);
     setTotalQuestions(40); // Assuming each section has 10 questions
   }, []);
 
-  console.log('Section Scores:', sectionScores);
+  // console.log('Section Scores:', sectionScores);
 
   const handleDownloadPDF = async () => {
     const userName = localStorage.getItem('userName') || 'User';
@@ -41,12 +46,16 @@ const Result = () => {
       />
     );
 
-    const blob = await pdf(doc).toBlob();
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${userName}_listening_test_results.pdf`;
-    link.click();
+    try {
+      const blob = await pdf(doc).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${userName}_listening_test_results.pdf`;
+      link.click();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
   };
 
   // const formatAnswers = (answersObj) => {
@@ -128,12 +137,12 @@ const Result = () => {
                 const qNum = index + 1;
                 const qKey = `${qNum}`;
                 return (
-                  
+
                   <tr key={qKey} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-2">{sectionScores.savedAnswers1?.[qKey] || '-'}</td>
-                    <td className="border border-gray-300 px-4 py-2">{sectionScores.savedAnswers2?.[qKey] || '-'}</td>
-                    <td className="border border-gray-300 px-4 py-2">{sectionScores.savedAnswers3?.[qKey] || '-'}</td>
-                    <td className="border border-gray-300 px-4 py-2">{sectionScores.savedAnswers4?.[qKey] || '-'}</td>
+                    <td className="border border-gray-300 px-4 py-2">{sectionAnswers.savedAnswers1?.[qKey] || '-'}</td>
+                    <td className="border border-gray-300 px-4 py-2">{sectionAnswers.savedAnswers2?.[qKey] || '-'}</td>
+                    <td className="border border-gray-300 px-4 py-2">{sectionAnswers.savedAnswers3?.[qKey] || '-'}</td>
+                    <td className="border border-gray-300 px-4 py-2">{sectionAnswers.savedAnswers4?.[qKey] || '-'}</td>
                   </tr>
                 );
               })}
