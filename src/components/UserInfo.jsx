@@ -9,7 +9,7 @@ const UserInfo = () => {
     e.preventDefault();
     if (name.trim()) {
       localStorage.setItem('userName', name);
-      navigate('/listening-section-1');
+      navigate('/instruction');
     }
   };
 

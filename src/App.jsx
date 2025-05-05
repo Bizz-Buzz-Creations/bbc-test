@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserInfo from './components/UserInfo';
+import Instruction from './components/Instruction';
 import ListeningSection1 from './components/ListeningSection1';
 import ListeningSection2 from './components/ListeningSection2';
 import ListeningSection3 from './components/ListeningSection3';
@@ -12,10 +13,11 @@ import Footer from './components/Footer';
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-gray-100">
+      <div className="flex flex-col min-h-screen bg-purple-50">
         <Navbar />
         <Routes>
           <Route path="/" element={<UserInfo />} />
+          <Route path="/instruction" element={<Instruction />} />
           <Route path="/listening-section-1" element={<ListeningSection1 />} />
           <Route path="/listening-section-2" element={<ListeningSection2 />} />
           <Route path="/listening-section-3" element={<ListeningSection3 />} />

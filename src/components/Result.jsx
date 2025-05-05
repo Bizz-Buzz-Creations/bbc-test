@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { pdf } from '@react-pdf/renderer';
 import ListeningResultPDF from './ListeningResultPDF';
 import Cookies from 'js-cookie';
+import FeedbackModal from './FeedbackModal';
 
 const Result = () => {
   const [totalScore, setTotalScore] = useState(0);
@@ -116,6 +117,9 @@ const Result = () => {
           >
             Download Results as PDF
           </button>
+          
+          <FeedbackModal />
+
           {/* <button
             onClick={() => navigate('/speaking-test')}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"

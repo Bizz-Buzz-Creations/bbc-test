@@ -117,7 +117,7 @@ const ListeningSection1 = () => {
         </div>
       </div>
       <div className="text-left">
-        <div className="flex justify-center items-start min-h-screen p-12">
+        <div className="flex justify-center items-start p-12">
           <div className="stacked-paper w-full h-fit mx-auto bg-gray-100 bg-white border border-gray-400 rounded-lg shadow-md">
             <div className='bg-red-50 rounded-t-lg p-5 border-b border-gray-300'>
             <h1 className="text-2xl text-slate-900 font-semibold font-mono">Section 1</h1>
