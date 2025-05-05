@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Instruction = () => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate('/listening-section-1')
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg my-10 inter-400">
       <h1 className="text-2xl font-semibold mb-6 text-center text-slate-700">Listening Test Instructions</h1>
@@ -56,7 +64,7 @@ const Instruction = () => {
 
         <button
             className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-md font-medium font-mono rounded-lg border border-gray-200 bg-slate-900 text-gray-100 shadow-2xs hover:bg-slate-800 focus:outline-hidden focus:bg-slate-500 disabled:opacity-50 inter-400"
-            onClick={() => window.location.href = '/listening-section-1'}
+            onClick={handleSubmit}
           >
             Start Test Now
           </button>
