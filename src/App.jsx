@@ -9,10 +9,12 @@ import Result from './components/Result';
 import SpeakingTest from './components/SpeakingTest';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-purple-50">
         <Navbar />
         <Routes>
